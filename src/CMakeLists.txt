@@ -26,6 +26,15 @@ set(libkscreen_SRCS
     ../backends/fake/parser.cpp
     ../backends/fake/fake.h
     ../backends/fake/parser.h
+
+    ../backends/xrandr/xrandr.cpp ../backends/xrandr/xrandr.h
+    ../backends/xrandr/xrandrconfig.cpp ../backends/xrandr/xrandrconfig.h
+    ../backends/xrandr/xrandrcrtc.cpp ../backends/xrandr/xrandrcrtc.h
+    ../backends/xrandr/xrandroutput.cpp ../backends/xrandr/xrandroutput.h
+    ../backends/xrandr/xrandrmode.cpp ../backends/xrandr/xrandrmode.h
+    ../backends/xrandr/xrandrscreen.cpp ../backends/xrandr/xrandrscreen.h
+    ../backends/xcbwrapper.cpp ../backends/xcbwrapper.h
+    ../backends/xcbeventlistener.cpp ../backends/xcbeventlistener.h
 )
 
 qt_add_dbus_interface(libkscreen_SRCS ../backends/kwayland/org.kde.KWin.TabletModeManager.xml tabletmodemanager_interface)
@@ -76,6 +85,7 @@ target_link_libraries(KF6Screen
     Qt::GuiPrivate # for QX11Info
     Qt::WaylandClient
     Wayland::Client
+    ${XCB_LIBRARIES}
 )
 
 set_target_properties(KF6Screen PROPERTIES

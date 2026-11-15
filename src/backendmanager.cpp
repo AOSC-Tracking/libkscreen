@@ -10,8 +10,11 @@
 
 #include "../backends/fake/fake.h"
 #include "../backends/kwayland/waylandbackend.h"
+#include "../backends/xrandr/xrandr.h"
 #include "abstractbackend.h"
 #include "configmonitor.h"
+
+#include <QGuiApplication>
 
 using namespace KScreen;
 
@@ -56,6 +59,9 @@ KScreen::AbstractBackend *BackendManager::loadBackendInProcess()
 
     if (qgetenv("KSCREEN_BACKEND") == QLatin1StringView("Fake")) {
         mInProcessBackend = new Fake;
+        mInProcessBackend->init(mBackendArguments);
+    } else if (QGuiApplication::platformName().startsWith(QLatin1String("xcb"))) {
+        mInProcessBackend = new XRandR;
         mInProcessBackend->init(mBackendArguments);
     } else {
         mInProcessBackend = new WaylandBackend;
